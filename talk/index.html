@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/sky.css" id="theme" />
+    <link rel="stylesheet" href="css/vs2015.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+## Künstliche Intelligenz in Gegenwart und Zukunft der Computervisualistik
+<div class="stretch-column" style="font-size: 22px; position: absolute; left: 0%; top: 70%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: start; justify-content: space-evenly" align="stretch">
+
+"Die Transformer übernehmen!"
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<style> 
+.reveal h3 { position: absolute; top: 0; left: 0; right: 0; margin: 0; padding: 20px; font-size: 60px; } 
+.center-stack { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; width:100%; text-align: center;}
+</style>
+
+
+
+### Wer ich bin?
+
+<div class="" style="position: absolute; left: 60%; top: 20%; height: 70%; width: 40%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/25Jahre CV/images/EmilBohleber_SoftwareDeveloper.jpg" alt="" style="border: 5px solid black; object-fit: scale-down">
+
+</div>
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 100%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+- Emil Bohleber
+- Master of Science (Computervisualistik) an der Uni Koblenz
+- Softwareentwickler und -architekt bei der BRICKMAKERS AG
+- KI Advisor (inoffizieller Titel) bei BM seit 2022
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<img src="work/25Jahre CV/images/BM1.png" alt="" style="object-fit: scale-down">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<img src="work/25Jahre CV/images/doom3.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; align-self: center; object-fit: scale-down">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Doom + KI
+
+<div class="" style="position: absolute; left: 55%; top: 20%; height: 70%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/25Jahre CV/images/Pasted image 20241023202652.png" alt="" style="object-fit: scale-down">
+
+</div>
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 100%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+- Von Google entwickelte GameNGen
+- Eine "Game Engine", die komplett nur KI verwendet
+ 
+Brauchen wir dann noch Computergrafik?
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 95%; width: 100%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/25Jahre CV/images/attentions_papr.png" alt="" style="display: flex; flex-direction: column; align-items: start; justify-content: center; align-self: center; object-fit: scale-down">
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### The rise of the Transformers
+
+<img src="work/25Jahre CV/images/Transformers6-Aufmacher-GQ.webp" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 500px; height: 500px; object-fit: fill; align-self: center">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### The rise of the Transformers
+
+<div class="" style="position: absolute; left: 55%; top: 12%; height: 88%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/25Jahre CV/images/Pasted image 20241023204230.png" alt="" style="border: 5px solid black; object-fit: scale-down">
+
+</div>
+<div class="" style="position: absolute; left: 0%; top: 20%; height: 80%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+- Entstanden für Übersetzungen
+- Nur attention layer
+- Höhere Effizienter und Geschwindigkeit
+- Bessere Skalierbarkeit und Flexibilität
+- Verbesserte Kontexterfassung
+- Generiert Wort für Wort
+- Voller Output ist Input
+
+**Ideen von multimedialen Anwendungen.** 
+
+</div>
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Selbstaufmerksamkeit
+
+- globale Abhängigkeiten und Kontexte vs. kleines Kontextfenster bei RNNs
+- Encoder: Bidirektionale Self-Attention
+- Decoder: Maskierte (unidirektionale) Self-Attention (Vermeidung v. Informationslecks)
+
+<img src="work/25Jahre CV/images/Drawing 2024-10-23 18.37.50.excalidraw.svg" alt="" style="display: flex; flex-direction: column; align-items: start; justify-content: center; width: .svgpx; object-fit: fill; align-self: center">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+## text zu text
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### LLMs + Softwareentwicklung
+
+<img src="work/25Jahre CV/images/copilot.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 800px; object-fit: fill; align-self: center">
+
+
+- Bis zu 25% Geschwindigkeitsgewinn beim Programmieren (GitHub Copilot)
+- Häufige Verwendung von ChatGPT, perplexity.ai etc.
+- Fremde Sprachen einfacher einsetzbar
+- Vier-Augen-Prinzip einhalten
+
+**Achtung: Trotzdem mal selber Coden ;)**
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Bildung & E-Learning
+
+<div class="" style="position: absolute; left: 5%; top: 10%; height: 85%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+- Enormes Potential im Bereich der Bildung
+- Personalisiertes Lernen
+	- "Describe it like I'm five"
+	- 24/7 Verfügbarkeit
+	- Echtzeit Übersetzen von Inhalten
+- Multimedialität
+
+**Zu lösen: Fehlinformationen**
+</div>
+<div class="" style="position: absolute; left: 60%; top: 0%; height: 100%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/25Jahre CV/images/limered_A_girl_studying_using_a_computer_with_an_LLM.png" alt="" style="border: 5px solid black; width: 500px; object-fit: fill">
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+## bild zu text
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Transformers & BV
+
+<div class="" style="position: absolute; left: 0%; top: 5%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+
+Transformer auf dem Vormarsch in Bildverarbeitung
+<img src="work/25Jahre CV/images/convnext.png" alt="" style="border: 5px solid black; object-fit: scale-down">
+
+<small>https://paperswithcode.com/sota</small> <!-- .element: style="position: absolute; left: 15%; top: 30%; height: 100%; width: 50%; display: flex; flex-direction: column; align-items: start; justify-content: center" -->
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Transformers & BV
+
+<img src="work/25Jahre CV/images/CNN_Meme.jpg" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; align-self: center; object-fit: scale-down">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Aufbau ViT
+
+<div class="" style="position: absolute; left: 0%; top: 10%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<div class="center-stack" >
+
+<img src="work/25Jahre CV/images/vit_architecture.jpg" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 1000px; object-fit: fill; align-self: center">
+
+
+<small>https://arxiv.org/pdf/2010.11929</small> 
+
+</div>
+</div>
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Gründe für Übernahme
+
+<img src="work/25Jahre CV/images/Pasted image 20241025143631.png" alt="" style="display: flex; flex-direction: column; align-items: start; justify-content: center; align-self: center; object-fit: scale-down">
+
+
+- Globale Abhängigkeiten einfangen
+- Performanter und Flexibler
+- Neue Verfügbarkeit von Datensätzen zum Training
+- viele Kombinationsmöglichkeiten
+	- [ConvNeXt](https://arxiv.org/abs/2201.03545) - "modernisiert" CNN mit Ideen aus Transformern
+	- [Swin](https://arxiv.org/abs/2103.14030) - Nutzt hierarchische Segmentierung
+	- [OmniVec](https://arxiv.org/pdf/2311.05709v1) - Besteht aus aufgabenspezifischen, multimodalen Encodern
+
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Anwendungen
+
+- Bild Klassifizierung und Segmentation, sowie Objekterkennung verbessert - [sota](https://paperswithcode.com/sota)
+- Tesla nutzt ein Transformer-Model für Camera Fusion - [Tesla-Slide](https://cdn.prod.website-files.com/5d7b77b063a9066d83e1209c/639b21606cce39c8d8c33e47_image3.png)
+
+<img src="work/25Jahre CV/images/Pasted image 20241025002054.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 600px; object-fit: fill; align-self: center">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+
+Anomalie Erkennung und Lokalisierung 
+
+<img src="work/25Jahre CV/images/Pasted image 20241025001428.png" alt="" style="border: 5px solid black; width: 700px; object-fit: fill">
+
+
+<small>https://arxiv.org/pdf/2104.10036</small> 
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+
+Aktionserkennung
+
+<img src="work/25Jahre CV/images/Pasted image 20241025001633.png" alt="" style="border: 5px solid black; width: 800px; object-fit: fill">
+
+
+<small>[https://openaccess.thecvf.com/](https://openaccess.thecvf.com/content/ICCV2021/papers/Arnab_ViViT_A_Video_Vision_Transformer_ICCV_2021_paper.pdf)</small>
+
+</div>
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+Bildbeschreibungen
+
+<img src="work/25Jahre CV/images/Pasted image 20241025002321.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 1000px; object-fit: fill; align-self: center">
+
+
+ <small>[www.v7labs.com](https://www.v7labs.com/blog/vision-transformer-guide#image-captioning)</small>
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+
+Monookulare Tiefen-/Posenschätzung
+
+<img src="work/25Jahre CV/images/Pasted image 20241025002520.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 1000px; object-fit: fill; align-self: center">
+
+
+ <small>https://arxiv.org/pdf/2103.13413</small>
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+## text zu bild
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Tokenisierung
+
+Mapping der Textteile auf ein Vokabular.
+
+- Kleineres Vokabular ausreichend
+- Kann seltene/unbekannte Wörter ableiten
+- Token tragen mehr Bedeutung als Buchstaben
+
+<img src="work/25Jahre CV/images/Pasted image 20241023231156.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 800px; height: 80px; object-fit: fill; align-self: center">
+
+
+`[12488, 6391, 4014, 316, 1001, 6602, 11, 889, 1236, 4128, 25, 3862, 181386, 364]`
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Von GPT-3 zu Pixeln
+\
+Mit Dall-E hat Open AI einen Transformer zum Pixelgenerator "umfunktioniert"
+<img src="work/25Jahre CV/images/dalle.png" alt="" style="object-fit: scale-down">
+
+
+1. Ein 256x256 Bild zu 32 x 32 Token mit 8192 Zuständen (Vokabular) runterrechnen
+2. Bis zu 256 Texttokens anfügen und einen Transformer trainieren
+3. ...
+4. Profit (Beziehungen der Text- zu Bildtokens)
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<img src="work/25Jahre CV/images/diffusion_challanger.png" alt="" style="object-fit: scale-down">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Diffusionsmodell
+
+Zwei Schritte (Beispiel: DALL-E 2):
+1. Text und Bild in ein Gemeinsamen Embedding-Raum transformieren
+2. Ein verrauschtes Bild schrittweise zum Embedding führen (rücktransformieren)
+
+<img src="work/25Jahre CV/images/DALLE_model.excalidraw.svg" alt="" style="display: flex; flex-direction: column; align-items: start; justify-content: center; width: .svg|1000px; height: 300px; object-fit: fill; align-self: center">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Was ist ein Embedding?
+
+Repräsentation der Bedeutung eines Texts als Multidimensionaler Vektor.
+- Rudimentärer Bestandteil von LLMs
+- Ermöglicht Vergleich (Berechnung) von Semantik von Texten
+	- z.B: `king − man + woman ≈ queen`
+- Vergleich durch z.B. Euklidische Distanz
+
+<img src="work/DNUG/images/embedding_visualization.excalidraw.svg" alt="" style="display: flex; flex-direction: column; align-items: start; justify-content: center; width: .svg|100px; height: 120px; object-fit: fill; align-self: center">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Rauschreduktion
+
+<div class="" style="position: absolute; left: 0%; top: 10%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<div class="center-stack">
+<img src="work/25Jahre CV/images/Pasted image 20241025005049.png" alt="" style="border: 5px solid black; object-fit: scale-down">
+
+<small>https://blog.segmind.com/sdxl-samplers-2/</small>
+</div>
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Möglichkeiten in der CG
+
+<div class="" style="position: absolute; left: 0%; top: 25%; height: 100%; width: 45%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<div class="center-stack">
+
+- Inpainting, Outpainting, Bild-zu-Bild Generierung
+- Texturgenerierung - [Tex](https://cprimozic.net/notes/posts/generating-textures-for-3d-using-stable-diffusion/)
+
+</div>
+</div>
+<div class="" style="position: absolute; left: 55%; top: 5%; height: 100%; width: 45%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/25Jahre CV/images/Pasted image 20241025002722.png" alt="" style="border: 5px solid black; width: 500px; object-fit: fill">
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+
+Audio/Musik Generierung und Restaurierung
+
+<img src="work/25Jahre CV/images/Pasted image 20241025002914.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 1200px; object-fit: fill; align-self: center">
+
+
+<small>[stability.ai](https://stability.ai/research/stable-audio-efficient-timing-latent-diffusion)</small>
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+
+Generierung von menschlichen Posen/Animation
+
+<img src="work/25Jahre CV/images/Pasted image 20241025003044.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 800px; object-fit: fill; align-self: center">
+
+
+<small>https://arxiv.org/pdf/2209.14916</small>
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+
+Bild zu 3D
+
+<img src="work/25Jahre CV/images/Pasted image 20241025003315.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 1200px; object-fit: fill; align-self: center">
+
+
+ https://arxiv.org/pdf/2303.11328v1
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<div class="center-stack">
+
+Text zu 3D
+
+<img src="work/25Jahre CV/images/Pasted image 20241025003528.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 1200px; object-fit: fill; align-self: center">
+
+
+<small>https://arxiv.org/pdf/2203.13333</small>
+
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+- Kombination mit Transformern [DiT](https://arxiv.org/pdf/2212.09748)
+- Stable Diffusion 3 nutzt auch Transformer im Hintergrund [SD3](https://arxiv.org/pdf/2403.03206)
+
+<img src="work/25Jahre CV/images/Pasted image 20241025003835.png" alt="" style="border: 5px solid black; display: flex; flex-direction: column; align-items: start; justify-content: center; width: 800px; object-fit: fill; align-self: center">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+## KI DOOM
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<img src="work/25Jahre CV/images/doom_model.png" alt="" style="object-fit: scale-down">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Probleme und Lösungen
+
+- Bildgenerierung war sehr langsam
+	- Modifiziertes SD 1.4 bei sehr kleiner Auflösung verwendet (ca. 20fps @ 320x240)
+
+- Game State == UI
+	- Extrahiert aus den letzten 60 Bildern (3sec)
+
+
+**Fazit: Es ist eigentlich keine Game Engine (im klassischen Sinne)** 
+
+Aber: Es zeigt, dass es möglich ist mit einem Model dieser Art in Echtzeit zu interagieren
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+<img src="work/25Jahre CV/images/Pasted image 20241025132920.png" alt="" style="object-fit: scale-down">
+
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: style="font-size: 30px" class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### CV und KI
+
+- In der CV lassen sich viele Machine Learning Ansätze finden
+- Viele weitere Einsatzmöglichkeiten:
+	- Medizinisch
+	- AR/VR
+	- Ray Tracing
+	- NerF und 3D Gaussian Splatting
+	- Renderoptimierung, z.B. NVIDIAS DLSS
+	- Physiksimulation
+	- Video (Sora etc.)
+- Hier Fokus auf kommerzielle Modelle. Viele Open Source Modelle fast genauso gut/manchmal besser.
+- Ethische Aspekte außen vor gelassen
+
+Lass uns über das alles einfach gleich quatschen ;)
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#001834" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: start; justify-content: center" absolute="true">
+
+### Danke
+
+Danke für die Einladung.
+Die Slides gibt es online auf https://brickmakersgmbh.github.io/cv25jahre_ki/#/
+
+
+<div class="" style="position: absolute; left: 0%; top: 90%; height: 10%; width: 20%; display: flex; flex-direction: column; align-items: start; justify-content: center" >
+
+<img src="work/template/images/BM Logo 2018 RGB white 2.png" alt="" style="object-fit: scale-down">
+
+</div>
+</div></script></section></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1280,"height":720,"margin":0.04,"controls":true,"progress":true,"slideNumber":false,"center":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
